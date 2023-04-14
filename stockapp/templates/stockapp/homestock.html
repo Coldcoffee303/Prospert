@@ -1,0 +1,31 @@
+{% extends 'stockapp/stockindex.html' %}
+{% load static %}
+
+{% block title %}
+stocks
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+  <h1>Explore</h1>
+  <form action="{% url 'getStock' %}">
+  <label for='stockpicker'>Select stocks</label>
+  <div class="input-group">
+    <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon" name="stockpicker">
+      <option selected="Choose Your Stock" >Choose</option>
+      {% for stock in stocklist %}
+      <option value="{{stock}}">{{stock}}</option>
+      {% endfor %}
+    </select>
+    <div class="input-group-append">
+      <input class="btn btn-outline-secondary" type="submit" value="submit">
+    </div>
+  </div>
+  </form>
+</div>
+{% endblock %}
+
+
+{% block js %}
+{% endblock %}

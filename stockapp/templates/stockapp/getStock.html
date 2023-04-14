@@ -1,0 +1,62 @@
+{% extends 'stockapp/stockindex.html' %}
+{% load static %}
+
+{% block title %}
+getStocks
+{% endblock %}
+
+{% block css %}
+<style>
+  .green {
+    color: lightgreen;
+  }
+  .red {
+    color: red;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Stock Tracker</h1>
+  <table class="table table-hover table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Open</th>
+        <th scope="col">CLose</th>
+        <th scope="col">Current</th>
+        <th scope="col">Change</th>
+        <th scope="col">Market Cap</th>
+        <th scope="col">Volume</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id=>{{Open}}</td>
+        <td id="{{stock}}_close">{{Close}}</td>
+        <td id={{stock}}_price>{{Price}}</td>
+        <td id="{{stock}}_change">
+          <script>
+            var change = document.getElementById("{{stock}}_price").innerHTML - document.getElementById("{{stock}}_close").innerHTML;
+            change = Number((change).toFixed(4))
+            document.getElementById("{{stock}}_change").innerHTML = change;
+            if(change>0){
+              document.getElementById("{{stock}}_change").className = "green";
+              document.getElementById("{{stock}}_change").innerHTML = "+" + change;
+            }
+            else if(change<1){
+              document.getElementById("{{stock}}_change").className = "red";
+            }
+          </script>
+        </td>
+        <td>{{Market}}</td>
+        <td>{{Volume}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+
+{% block js %}
+{% endblock %}
