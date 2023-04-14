@@ -32,7 +32,7 @@ getStocks
     </thead>
     <tbody>
       <tr>
-        <td id=>{{Open}}</td>
+        <td id={{stock}}_open>{{Open}}</td>
         <td id="{{stock}}_close">{{Close}}</td>
         <td id={{stock}}_price>{{Price}}</td>
         <td id="{{stock}}_change">
@@ -42,21 +42,67 @@ getStocks
             document.getElementById("{{stock}}_change").innerHTML = change;
             if(change>0){
               document.getElementById("{{stock}}_change").className = "green";
-              document.getElementById("{{stock}}_change").innerHTML = "+" + change;
+              document.getElementById("{{stock}_change}").innerHTML = "+" + change;
             }
             else if(change<1){
               document.getElementById("{{stock}}_change").className = "red";
             }
           </script>
         </td>
-        <td>{{Market}}</td>
-        <td>{{Volume}}</td>
+        <td id="{{stock}}_mkt">{{Market}}</td>
+        <td id="{{stock}}_vol">{{Volume}}</td>
       </tr>
     </tbody>
   </table>
 </div>
+
+{{room_name| json_script:"room-name"}}
+
 {% endblock %}
 
 
 {% block js %}
+<script type="text/javascript">
+  const roomName = JSON.parse(document.getElementById("room-name").textContent);
+  var queryString = window.location.search;
+  queryString = queryString.substring(1);
+  console.log(queryString);
+
+  const stockSocket = new WebSocket(
+    'ws://' +
+    window.location.host +
+    '/ws/stock/'+ 
+    roomName +
+    '/' + 
+    '?' +
+    queryString
+  );
+
+  stockSocket.onmessage = function(e) {
+    console.log(e.data);
+    const data = JSON.parse(e.data);
+    console.log(data);
+  }
+  stockSocket.onmessage = function(e){
+  const [key, value] of Object.entries(data){
+      var price = Number((value['Current']).toFixed(4))
+      var close = Number((value['Close']).toFixed(4))
+      document.getElementById(value['stock']+"_open").innerHTML = value['Open'];
+      document.getElementById(value['stock']+"_close").innerHTML = close;
+      document.getElementById(value['stock']+"_price").innerHTML = price;
+      document.getElementById(value['stock']+"_mkt").innerHTML = value['Market'];
+      document.getElementById(value['stock']+"_vol").innerHTML = value['Volume'];
+      var change = document.getElementById("{{stock}}_price").innerHTML - document.getElementById("{{stock}}_close").innerHTML;
+      change = Number((change).toFixed(4))
+      document.getElementById("{{stock}}_change").innerHTML = change;
+      if(change>0){
+        document.getElementById("{{stock}}_change").className = "green";
+        document.getElementById("{{stock}_change}").innerHTML = "+" + change;
+      }
+      else if(change<1){
+        document.getElementById("{{stock}}_change").className = "red";
+      }
+  }
+
+</script>
 {% endblock %}
