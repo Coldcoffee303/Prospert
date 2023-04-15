@@ -7,3 +7,5 @@ redis
 channels[daphne]
 channels-redis
 asyncio
+simplejson
+yahoo-fin

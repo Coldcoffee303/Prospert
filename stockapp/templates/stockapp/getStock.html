@@ -1,4 +1,4 @@
-{% extends 'stockapp/stockindex.html' %}
+{% extends 'index.html' %}
 {% load static %}
 
 {% block title %}
@@ -83,26 +83,5 @@ getStocks
     const data = JSON.parse(e.data);
     console.log(data);
   }
-  stockSocket.onmessage = function(e){
-  const [key, value] of Object.entries(data){
-      var price = Number((value['Current']).toFixed(4))
-      var close = Number((value['Close']).toFixed(4))
-      document.getElementById(value['stock']+"_open").innerHTML = value['Open'];
-      document.getElementById(value['stock']+"_close").innerHTML = close;
-      document.getElementById(value['stock']+"_price").innerHTML = price;
-      document.getElementById(value['stock']+"_mkt").innerHTML = value['Market'];
-      document.getElementById(value['stock']+"_vol").innerHTML = value['Volume'];
-      var change = document.getElementById("{{stock}}_price").innerHTML - document.getElementById("{{stock}}_close").innerHTML;
-      change = Number((change).toFixed(4))
-      document.getElementById("{{stock}}_change").innerHTML = change;
-      if(change>0){
-        document.getElementById("{{stock}}_change").className = "green";
-        document.getElementById("{{stock}_change}").innerHTML = "+" + change;
-      }
-      else if(change<1){
-        document.getElementById("{{stock}}_change").className = "red";
-      }
-  }
-
 </script>
 {% endblock %}
