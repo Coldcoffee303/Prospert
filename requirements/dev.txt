@@ -1,1 +1,11 @@
 -r prod.txt
+django==4.1.7
+celery
+django-celery-results
+django-celery-beat
+redis
+channels[daphne]
+channels-redis
+asyncio
+simplejson
+yahoo-fin

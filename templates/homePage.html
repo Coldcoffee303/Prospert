@@ -1,0 +1,107 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block links %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+
+{% block title %}
+HomePage
+{% endblock %}
+
+
+{% block css %}
+{% endblock %}
+
+
+{% block content %}
+<br>
+<br>
+<body>
+<div class="container">
+	<div class="row">
+	  <div class="col-sm-6">
+			<h1 style="color:white;">TOP GAINERS</h1>
+		  <table class="table table-hover table-dark" style="border: 2px solid #343a47;">
+			  <thead>
+			    <tr>
+			      <th scope="col">Symbol</th>
+			      <th scope="col">Price</th>
+			      <th scope="col">Change (PCT)</th>
+			      <th scope="col">Change</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    {% for key, value in table1.items %}
+			      <tr>
+			        <td>{{ value.Symbol }}</td>
+			        <td>{{ value.Price }}</td>
+			        <td>{{ value.Change_PCT }}</td>
+			        <td id="gainer_{{key}}_change" style="color: lightgreen;">{{ value.Change }}</td>
+			      </tr>
+			    {% endfor %}
+			  </tbody>
+			</table>
+		</div>
+		<div class="col-sm-6">
+			<h1 style="color:white;">TOP LOSERS</h1>
+			<table class="table table-hover table-dark">
+			  <thead>
+			    <tr>
+			      <th scope="col">Symbol</th>
+			      <th scope="col">Price</th>
+			      <th scope="col">Change (PCT)</th>
+			      <th scope="col">Change</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    {% for key, value in table2.items %}
+			      <tr>
+			        <td>{{ value.Symbol }}</td>
+			        <td>{{ value.Price }}</td>
+			        <td>{{ value.Change_PCT }}</td>
+			        <td id="loser_{{key}}_change" style="color: red;">{{ value.Change }}</td>
+			      </tr>
+			    {% endfor %}
+			  </tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6">
+			<h1 style="color:white;">MOST ACTIVE</h1>
+			<table class="table table-hover table-dark">
+			  <thead>
+			    <tr>
+			      <th scope="col">Symbol</th>
+			      <th scope="col">Price</th>
+			      <th scope="col">Change (PCT)</th>
+			      <th scope="col">Change</th>
+			      <th scope="col">Volume</th>
+			      <th scope="col">Market Cap</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    {% for key, value in table3.items %}
+			      <tr>
+			        <td>{{ value.Symbol }}</td>
+			        <td>{{ value.Price }}</td>
+			        <td>{{ value.Change_PCT }}</td>
+			        <td id="most_active_{{key}}_change">{{ value.Change }}</td>
+			        <td>{{ value.Volume }}</td>
+			        <td>{{ value.Market }}</td>
+			      </tr>
+			    {% endfor %}
+			  </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+</body>
+{% endblock %}
+
+
+{% block js %}
+{% endblock %}

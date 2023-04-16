@@ -1,5 +1,10 @@
-{% extends 'stockapp/stockindex.html' %}
+{% extends 'index.html' %}
 {% load static %}
+
+{% block links %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
 
 {% block title %}
 getStocks
@@ -7,6 +12,9 @@ getStocks
 
 {% block css %}
 <style>
+  #myChart {
+      background-color: #212529;
+  }
   .green {
     color: lightgreen;
   }
@@ -17,8 +25,13 @@ getStocks
 {% endblock %}
 
 {% block content %}
+<h1>Stock Tracker</h1>
 <div class="container">
-  <h1>Stock Tracker</h1>
+  <canvas id="myChart"></canvas>
+</div>
+
+
+<div class="container">
   <table class="table table-hover table-dark">
     <thead>
       <tr>
@@ -32,31 +45,156 @@ getStocks
     </thead>
     <tbody>
       <tr>
-        <td id=>{{Open}}</td>
-        <td id="{{stock}}_close">{{Close}}</td>
-        <td id={{stock}}_price>{{Price}}</td>
-        <td id="{{stock}}_change">
+        <td id="open">{{data2.Open}}</td>
+        <td id="close">{{data2.Close}}</td>
+        <td id="price">{{data2.Price}}</td>
+        <td id="change">
           <script>
-            var change = document.getElementById("{{stock}}_price").innerHTML - document.getElementById("{{stock}}_close").innerHTML;
+            var change = document.getElementById("price").innerHTML - document.getElementById("close").innerHTML;
             change = Number((change).toFixed(4))
-            document.getElementById("{{stock}}_change").innerHTML = change;
+            document.getElementById("change").innerHTML = change;
             if(change>0){
-              document.getElementById("{{stock}}_change").className = "green";
-              document.getElementById("{{stock}}_change").innerHTML = "+" + change;
+              document.getElementById("change").className = "green";
+              document.getElementById("change}").innerHTML = "+" + change;
             }
             else if(change<1){
-              document.getElementById("{{stock}}_change").className = "red";
+              document.getElementById("change").className = "red";
             }
           </script>
         </td>
-        <td>{{Market}}</td>
-        <td>{{Volume}}</td>
+        <td id="market">{{data2.Market}}</td>
+        <td id="volume">{{data2.Volume}}</td>
       </tr>
     </tbody>
   </table>
 </div>
+
+{{room_name| json_script:"room-name"}}
+
 {% endblock %}
 
 
 {% block js %}
+<script type="text/javascript">
+
+  var data = {
+        labels: [{% for lb in data1.Label %}"{{lb}}",{% endfor %}] ,
+        datasets: [{
+          label: 'Stock Price',
+          data: [{% for value in data1.Values %}{{value}},{% endfor %}] ,
+          fill: false,
+          backgroundColor: 'rgba( 30, 144, 255, 0.2)',
+          borderColor: 'rgba( 30, 144, 255, 1)',
+          borderWidth: 2,
+          pointRadius: 4,
+          pointBackgroundColor: 'rgb( 30, 144, 255,1)',
+          pointBorderColor: 'rgb( 30, 144, 255,1)',
+          pointHoverRadius: 6,
+          pointHoverBackgroundColor: 'rgb(  30, 144, 255,1)',
+          pointHoverBorderColor: 'rgb(  30, 144, 255,1)',
+          pointHitRadius: 8,
+          pointBorderWidth: 2,
+          tension: 0.1
+        }]
+      };
+
+
+
+  var ctx = document.getElementById('myChart');
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              display: true,
+              title: 'Date'
+            },
+            y: {
+              display: true,
+              title: 'Price'
+            }
+          }
+        }
+      });
+
+
+var options = {
+    scales: {
+        x: {
+            grid: {
+                display: false
+            }
+        },
+        y: {
+            grid: {
+                display: true,
+                color: 'rgb(108, 117, 125,0.2)',
+                borderWidth: 5,
+                borderDash: [8, 4]
+            },
+            ticks: {
+                beginAtZero: false,
+                font: {
+                    family: 'Arial',
+                    size: 12,
+                    weight: 'normal'
+                },
+                color: 'rgba(255,255,255,0.7)',
+                callback: function(value, index, values) {
+                    return value.toFixed(2);
+                }
+            }
+        }
+    },
+    plugins: {
+        legend: {
+            display: false
+        }
+    }
+};
+
+
+  const roomName = JSON.parse(document.getElementById("room-name").textContent);
+  var queryString = window.location.search;
+  queryString = queryString.substring(1);
+  console.log(queryString);
+
+  const stockSocket = new WebSocket(
+    'ws://' +
+    window.location.host +
+    '/ws/stock/'+ 
+    roomName +
+    '/' + 
+    '?' +
+    queryString
+  );
+
+  stockSocket.onmessage = function(e) {
+    console.log(e.data);
+    const data = JSON.parse(e.data);
+    console.log(data);
+    for (const [key, value] of Object.entries(data.data2)){
+      document.getElementById("open").innerHTML = value['Open'];
+      document.getElementById("close").innerHTML = value['Close'];
+      document.getElementById("price").innerHTML = value['Price'];
+      document.getElementById("market").innerHTML = value['Market'];
+      document.getElementById("volume").innerHTML = value['Volume'];
+      var change = document.getElementById("price").innerHTML - document.getElementById("close").innerHTML;
+      change = Number((change).toFixed(4))
+      document.getElementById("change").innerHTML = change;
+      if(change>0){
+        document.getElementById("change").className = "green";
+        document.getElementById("change}").innerHTML = "+" + change;
+            }
+      else if(change<1){
+        document.getElementById("change").className = "red";
+        }
+    }
+  }
+
+
+
+</script>
 {% endblock %}

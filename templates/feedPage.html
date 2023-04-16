@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/feedstyle.css' %}">
+<div class='total-body'>
+	<div class='left-body-part'>
+		{% for article in articles %}
+		<br>
+		<div class='article'>
+			<div class='article-photo'>
+				<img src="{{ article.urlToImage }}" >
+			</div>
+			<div class='article-content'>
+				<h2>{{ article.title }}</h2>
+				<p>{{ article.description }}</p>
+				<button><a href='{{ article.url }}' target='_blank'>Read more</a></button>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	<div class='right-body-part'>
+	</div>
+</div>
+{% endblock content %}
