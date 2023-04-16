@@ -1,8 +1,25 @@
-<div>
-	<form method="POST" action="">
-		{% csrf_token %}
-		<input type="text" name="username">
-		<input type="password" name="password">
-		<button type="sumbmit" name="submit">login</button>
-	</form>
-</div>
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>User Login</title>
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+  <div class="container">
+    <form method="POST">
+      {% csrf_token %}
+      <h2>User Login</h2>
+      <div class="form-group">
+        <label for="id_username">Username:</label>
+        <input type="text" name="username" id="id_username" required>
+      </div>
+      <div class="form-group">
+        <label for="id_password">Password:</label>
+        <input type="password" name="password" id="id_password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,141 +1,80 @@
-*{
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-}
-.hero{
-    height: 100%;
-    width: 100%;
-    background-image: linear-gradient(to top right,#06bdff,#ff1010);
-    background-position: center;
-    background-size: cover;
-    position: absolute;
-}
-.form-box{
-    width: 380px;
-    height: 480px;
-    border-radius: 30px;
-    position: relative;
-    margin: 6% auto;
-    background: #ffffff;
-    padding: 3px;
-    overflow: hidden;
-}
-.button-box{
-    width: 211px;
-    margin: 60px auto;
-    position: relative;
-    box-shadow: 0 0 20px 9px #7f7f7f;
-    border-radius: 30px;
-}
-#btn{
-    top: 0;
-    left: 0;
-    position: absolute;
-    width: 110px;
-    height: 100%;
-    background: linear-gradient(to right,#ff1010,#06bdff);
-    border-radius: 30px;
-    transition: .5s;
-}
-.input-group{
-    top: 180px;
-    position: absolute;
-    width: 280px;
-    transition: .5s;
-}
-.input-field{
-    width: 100%;
-    padding: 10px 0;
-    margin: 5px 0;
-    border-left: 0;
-    border-right: 0;
-    border-top: 0;
-    border-bottom: 1px solid #010101;
-    outline: none;
-    background:transparent;
-}
-.submit-btn{
-    width: 85%;
-    padding: 10px 30px;
-    cursor: pointer;
-    display: block;
-    margin: auto;
-    background: linear-gradient(to right,#ff1010,#06bdff);
-    border:0;
-    outline:none;
-    box-shadow: inset;
-    border-radius: 30px;
-}
-.submit-btn:active {
-    letter-spacing: 3px;
-    background-color: hsl(261deg 80% 48%);
-    color: hsl(0, 0%, 100%);
-    box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
-    transform: translateY(10px);
-    transition: 100ms;
-}
-.check-box{
-    margin: 30px 10px 30px 0;
-}
-span{
-    color: #240505;
-    font-size: 12px;
-    bottom: 65px;
-    position: absolute;
-}
-#Login{
-    left: 50px;
-}
-#Register{
-    left: 450px;
+
+.container {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  max-width: 500px;
 }
 
-/* Form container */
-.input-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 500px;
-    margin: auto;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-  }
-  
-  /* Input fields */
-  .input-field {
-    width: 100%;
-    margin: 10px 0;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    font-size: 16px;
-  }
-  
-  /* Submit button */
-  .submit-btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .submit-btn:hover {
-    background-color: #45a049;
-  }
-  
-  /* Error messages */
-  .error-message {
-    color: red;
-    font-size: 14px;
-    margin: 5px 0;
-  }
-  
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-error {
+  color: red;
+  margin-top: 0.25rem;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  max-width: 360px;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #007bff;
+  width: 100%;
+  max-width: 350px;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+.btn-primary.disabled,
+.btn-primary:disabled {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+  background-color: #0062cc;
+  border-color: #005cbf;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
