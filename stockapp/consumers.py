@@ -8,23 +8,20 @@ from django_celery_beat.models import PeriodicTask, IntervalSchedule
 
 class StockConsumer(AsyncWebsocketConsumer):
 
-
     @sync_to_async
-    def addToCeleryBeat(self,stockpicker):
-        task = PeriodicTask.objects.filter(name='every-10-seconds')
-        if len(task)>0:
-            task = task.first()
-            args = json.loads(task.args)
-            args = args[0]
-            for x in stockpicker:
-                if x not in args:
-                    args.append(x)
-            task.args = json.dumps([args])
-            task.save()
-        else:
-            schedule, created = IntervalSchedule.objects.get_or_create(every=10, period = IntervalSchedule.SECONDS)
-            task = PeriodicTask.objects.create(interval = schedule,name = 'every-10-seconds', task='stockapp.tasks.update_stock',args=json.dumps([stockpicker]))
-
+    def addToCeleryBeat(self, stockpicker):
+        schedule, created = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.SECONDS)
+        for stock in stockpicker:
+            task_name = f"every-10-seconds-{stock}"
+            task = PeriodicTask.objects.filter(name=task_name).first()
+            if task:
+                continue  # Task already exists
+            task = PeriodicTask.objects.create(
+                interval=schedule,
+                name=task_name,
+                task='stockapp.tasks.update_stock',
+                args=json.dumps([stock])
+            )
 
 
 
