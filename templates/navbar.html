@@ -37,10 +37,19 @@
                       <button type="submit" >Search</button>
                     </form>
                 </li>  
-                <li>
-                    <span>Hello {{request.user}}</span>
-                    <a href="{% url 'Logout' %}">Logout</a>
-                </li>                
+                {% if user.is_authenticated %}
+                    <li>
+                        <span>Hello {{ request.user }}</span>
+                        <a href="{% url 'Logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'Login' %}">Login</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'SignUp' %}">Signup</a>
+                    </li>
+                {% endif %} 
             </ul>
         </nav>
     </header>

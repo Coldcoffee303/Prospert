@@ -1,17 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>THE PROJECT</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/signup.css' %}">
+    </head>
+    <body>
+        <div class="hero">
+            <div class="form-box">
+                <div class="button-box">
+                    <div id="btn"></div>
+                    <button type="button" class="btn" onclick="Register()">Register</button>
+                </div>
+				<form class="form-signin" method="post">
+					{% csrf_token %}
+					<h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+					{% if form.non_field_errors %}
+					  <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+					{% endif %}
+					<div class="form-floating">
+					  {{ form.username }}
+					</div>
+					<div class="form-floating">
+					  {{ form.password }}
+					</div>
+					<div class="checkbox mb-3">
+					  <label>
+						<input type="checkbox" name="remember" value="1" {% if request.POST.remember %}checked{% endif %}> Remember me
+					  </label>
+					</div>
+					<button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+					<p class="mt-5 mb-3 text-muted">&copy; 2022</p>
+				  </form> 
+            </div>
+        </div>
+        <script>
+            var y = document.getElementById("Register");
+            var z = document.getElementById("btn");
 
-<form method="POST" action="">
-	{% csrf_token %}
-	{{form.username.label}}
-	{{form.username}}
-	{{form.email}}
-	{{form.password1.label}}
-	{{form.password1}}
-	{{form.password2.label}}
-	{{form.password2}}
-	{{form.errors}}
-
-	{% for message in messages %}
-		<p>{{mesage}}</p>
-	{% endfor %}
-	<input type="submit" name="Create User">
-</form>
+            function Register(){
+                x.style.left="-400px";
+                y.style.left="50px";
+                z.style.left="110px";
+            }
+        </script>
+    </body>
+</html>
