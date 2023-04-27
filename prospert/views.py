@@ -32,8 +32,7 @@ def HomePage(request):
 
 @login_required(login_url='Login')
 def feedPage(request):
-	apikey = os.environ.get("SECRET")
-	print(type(apikey))
+	apikey = os.environ.get('TOKEN1') #get yours at newsapi.org
 	feedApi = NewsApiClient(apikey)
 	headlines = feedApi.get_top_headlines(category='business',country='in')
 	articles = headlines['articles']
